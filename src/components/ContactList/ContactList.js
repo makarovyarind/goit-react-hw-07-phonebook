@@ -18,15 +18,15 @@ export function ContactList() {
     );
   };
 
-  const newContacts = filteredContacts(contacts, filterName);
+  // const newContacts = filteredContacts(contacts, filterName);
 
   useEffect(() => {
     dispatch(getContactsThunk());
-  }, [dispatch, newContacts.length]);
+  }, [dispatch]);
 
   return (
     <ul className={css.list}>
-      {newContacts.map(({ id, name, number }) => (
+      {filteredContacts(contacts, filterName).map(({ id, name, number }) => (
         <li className={css.item} key={id}>
           <p className={css.contact}>
             {name}: {number}
