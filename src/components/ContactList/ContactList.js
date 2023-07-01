@@ -8,10 +8,6 @@ export function ContactList() {
   const filterName = useSelector((state) => state.contacts.filter);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getContactsThunk());
-  }, [dispatch]);
-
   const handleDeleteContact = (id) => {
     dispatch(deleteContactThunk(id));
   };
@@ -23,6 +19,10 @@ export function ContactList() {
   };
 
   const newContacts = filteredContacts(contacts, filterName);
+
+  useEffect(() => {
+    dispatch(getContactsThunk());
+  }, [dispatch, newContacts.length]);
 
   return (
     <ul className={css.list}>

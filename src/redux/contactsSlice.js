@@ -17,6 +17,18 @@ const handleError = (state, { payload }) => {
   state.contacts.error = payload
 };
 
+const handleDeleteContactFulfilled = (state, { payload }) => {
+  state.contacts.isLoading = false;
+  state.contacts.items = state.contacts.items.filter((contact) => contact.id !== payload);
+  state.contacts.error = '';
+};
+
+const handleAddContactsFulfilled = (state, { payload }) => {
+  state.contacts.isLoading = false
+  state.items.push(payload);
+  state.contacts.error = ''
+};
+
 export const contactsSlice = createSlice({
     name: 'contacts',
     initialState,
@@ -31,10 +43,10 @@ export const contactsSlice = createSlice({
       .addCase(getContactsThunk.fulfilled, handleFulfilled)
       .addCase(getContactsThunk.rejected, handleError)
       .addCase(addContactThunk.pending, handlePending)
-      .addCase(addContactThunk.fulfilled, handleFulfilled)
+      .addCase(addContactThunk.fulfilled, handleAddContactsFulfilled)
       .addCase(addContactThunk.rejected, handleError)
       .addCase(deleteContactThunk.pending, handlePending)
-      .addCase(deleteContactThunk.fulfilled, handleFulfilled)
+      .addCase(deleteContactThunk.fulfilled, handleDeleteContactFulfilled)
       .addCase(deleteContactThunk.rejected, handleError);
     }
   });
