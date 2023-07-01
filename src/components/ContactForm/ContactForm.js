@@ -1,7 +1,7 @@
 import css from './ContactForm.module.css';
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { addContactThunk } from '../../redux/thunks';
+import { addContactThunk, getContactsThunk } from '../../redux/thunks';
 
 export function ContactForm() {
   const contacts = useSelector((state) => state.contacts.contacts.items);
@@ -13,7 +13,7 @@ export function ContactForm() {
     setUserData((prevUserData) => ({ ...prevUserData, [name]: value }));
   };
 
-  const formSubmit = (e) => {
+  const formSubmit = async (e) => {
     e.preventDefault();
 
     const { name, number } = userData;
@@ -28,7 +28,8 @@ export function ContactForm() {
       number,
     };
 
-    dispatch(addContactThunk(newContact));
+    await dispatch(addContactThunk(newContact));
+    await dispatch(getContactsThunk());
     handleReset();
   };
 

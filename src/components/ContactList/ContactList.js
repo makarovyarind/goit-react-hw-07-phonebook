@@ -5,11 +5,13 @@ import { useEffect } from 'react';
 
 export function ContactList() {
   const contacts = useSelector((state) => state.contacts.contacts.items);
+  console.log(contacts);
   const filterName = useSelector((state) => state.contacts.filter);
   const dispatch = useDispatch();
 
-  const handleDeleteContact = (id) => {
-    dispatch(deleteContactThunk(id));
+  const handleDeleteContact = async (id) => {
+    await dispatch(deleteContactThunk(id));
+    await dispatch(getContactsThunk());
   };
 
   const filteredContacts = (contacts, filterName) => {
